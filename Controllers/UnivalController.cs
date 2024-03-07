@@ -46,14 +46,19 @@ namespace UnivalGeovanni.Controllers
         }
 
         [HttpPost]
-        [Route("CadastroMateria")]
-        public IActionResult Cadastro([FromBody] MateriaDTO materia)
+        public IActionResult Post([FromBody] MateriaDTO materia)
         {
-           var materiaDAO = new MateriaDAO();
-           int idMateria = 0;
-           materiaDAO.CadastrarMateria(materia);
-           idMateria = materia.ID;
-           return Ok();
+            try
+            {
+                var dao = new MateriaDAO();
+                dao.CadastrarMateria(materia);
+                return Ok("Matéria cadastrada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                // Você pode personalizar a mensagem de erro conforme necessário
+                return StatusCode(500, $"Erro ao cadastrar matéria: {ex.Message}");
+            }
         }
 
         [HttpPost]
@@ -71,6 +76,16 @@ namespace UnivalGeovanni.Controllers
             var dao = new AlunoDAO();
 
             var aluno = dao.ListarAluno();
+            return Ok(aluno);
+        }
+
+        [HttpGet]
+        [Route("ListarMateria")]
+        public IActionResult ListarMateria()
+        {
+            var dao = new MateriaDAO();
+
+            var aluno = dao.ListarMateria();
             return Ok(aluno);
         }
     }

@@ -8,7 +8,7 @@ namespace UnivalGeovanni.DAO
     {
             public static MySqlConnection Build()
             {
-                var connectionString = "Server=localhost;Database=Unival;Uid=root;Pwd=root";
+                var connectionString = "Server=localhost;Database=Unival;Uid=root;Pwd=30122006";
                 return new MySqlConnection(connectionString);
             }
     }

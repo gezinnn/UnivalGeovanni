@@ -10,8 +10,8 @@ namespace UnivalGeovanni.DAO
             var conexao = ConnectionFactory.Build();
             conexao.Open();
 
-            var query = @"INSERT INTO Professor (Nome, CPF, Email, Celular, DataNascimento)
-                         VALUES (@nome, @cpf, @email, @celular, @datanascimento)SELECT LAST_INSERT_ID();";
+            var query = @"INSERT INTO Professores (Nome, CPF, Email, Celular, DataNascimento)
+                         VALUES (@nome, @cpf, @email, @celular, @datanascimento);";
 
             var comando = new MySqlCommand(query, conexao);
             comando.Parameters.AddWithValue("@nome", professor.Nome);
@@ -27,7 +27,7 @@ namespace UnivalGeovanni.DAO
             using (var conexao = ConnectionFactory.Build())
             {
                 conexao.Open();
-                var query = "SELECT COUNT(*) FROM Professor WHERE Email = @email";
+                var query = "SELECT COUNT(*) FROM Professores WHERE Email = @email";
                 using (var comando = new MySqlCommand(query, conexao))
                 {
                     comando.Parameters.AddWithValue("@email", professor.Email);
