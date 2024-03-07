@@ -46,14 +46,6 @@ namespace UnivalGeovanni.Controllers
         }
 
         [HttpPost]
-        [Route("CadastrarMateria")]
-
-        public IActionResult Materia()
-        {
-            return Ok();
-        }
-
-        [HttpPost]
         [Route("CadastroMateria")]
         public IActionResult Cadastro([FromBody] MateriaDTO materia)
         {
