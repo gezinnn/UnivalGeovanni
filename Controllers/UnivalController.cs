@@ -88,5 +88,15 @@ namespace UnivalGeovanni.Controllers
             var aluno = dao.ListarMateria();
             return Ok(aluno);
         }
+
+        [HttpGet]
+        [Route("ListarProfessores")]
+        public IActionResult ListarTeacherrrr()
+        {
+            var dao = new ProfessorDAO();
+
+            var professor = dao.ListaTeacherrrr();
+            return Ok(professor);
+        }
     }
 }

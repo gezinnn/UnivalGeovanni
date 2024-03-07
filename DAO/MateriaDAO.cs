@@ -1,4 +1,4 @@
-﻿ using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using UnivalGeovanni.DTO;
 
@@ -11,7 +11,6 @@ namespace UnivalGeovanni.DAO
             using (var conexao = ConnectionFactory.Build())
             {
                 conexao.Open();
-
                 var query = @"INSERT INTO Materias (Nome, Descricao, Professor)
                             VALUES (@nome, @descricao, @professor);
                             SELECT LAST_INSERT_ID();";

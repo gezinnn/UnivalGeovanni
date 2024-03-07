@@ -37,6 +37,32 @@ namespace UnivalGeovanni.DAO
             }
             return professorExiste;
         }
+        public List<ProfessorDTO> ListaTeacherrrr()
+        {
+            var conexao = ConnectionFactory.Build();
+            conexao.Open();
+
+            var query = "SELECT * FROM Professores";
+
+            var comando = new MySqlCommand(query, conexao);
+            var dataReader = comando.ExecuteReader();
+
+            var professores = new List<ProfessorDTO>();
+
+            while (dataReader.Read())
+            {
+                var professorDTO = new ProfessorDTO();
+                professorDTO.Id = int.Parse(dataReader["ID"].ToString());
+                professorDTO.Nome = dataReader["Nome"].ToString();
+                professorDTO.CPF = dataReader["CPF"].ToString();
+                professorDTO.Email = dataReader["Email"].ToString();
+                professorDTO.Celular = dataReader["Celular"].ToString();
+                professorDTO.DataNascimento = (DateTime)dataReader["DataNascimento"];
+                professores.Add(professorDTO);
+            }
+
+            return professores;
+        }
     }
 }
 
