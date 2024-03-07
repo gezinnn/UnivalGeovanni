@@ -5,7 +5,7 @@ namespace UnivalGeovanni.DAO
 {
     public class ProfessorDAO
     {
-        public int CadastarProfessor(ProfessorDTO professor)
+        public void CadastarProfessor(ProfessorDTO professor)
         {
             var conexao = ConnectionFactory.Build();
             conexao.Open();
@@ -19,9 +19,24 @@ namespace UnivalGeovanni.DAO
             comando.Parameters.AddWithValue("@email", professor.Email);
             comando.Parameters.AddWithValue("@celular", professor.Celular);
             comando.Parameters.AddWithValue("@datanascimento", professor.DataNascimento);
-
-            int novoID = Convert.ToInt32(comando.ExecuteScalar());
-            return novoID;
+            comando.ExecuteNonQuery();
+        }
+        public bool VerificarProfessor(ProfessorDTO professor)
+        {
+            bool professorExiste = false;
+            using (var conexao = ConnectionFactory.Build())
+            {
+                conexao.Open();
+                var query = "SELECT COUNT(*) FROM Professor WHERE Email = @email";
+                using (var comando = new MySqlCommand(query, conexao))
+                {
+                    comando.Parameters.AddWithValue("@email", professor.Email);
+                    int count = Convert.ToInt32(comando.ExecuteScalar());
+                    professorExiste = count > 0;
+                }
+            }
+            return professorExiste;
         }
     }
 }
+

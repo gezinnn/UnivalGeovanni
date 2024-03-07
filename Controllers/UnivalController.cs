@@ -30,8 +30,18 @@ namespace UnivalGeovanni.Controllers
         [HttpPost]
         [Route("CadastrarProfessor")]
 
-        public IActionResult Professor(ProfessorDTO professor)
+        public IActionResult Professor([FromBody] ProfessorDTO professor)
         {
+            var dao = new ProfessorDAO();
+            var professorExiste = dao.VerificarProfessor(professor);
+
+            if (professorExiste)
+            {
+                var mensagem = "E-mail já existe na base de dados";
+                return Conflict(mensagem);
+            }
+
+            dao.CadastarProfessor(professor);
             return Ok();
         }
 
