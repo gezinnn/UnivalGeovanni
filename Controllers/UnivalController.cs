@@ -46,7 +46,8 @@ namespace UnivalGeovanni.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] MateriaDTO materia)
+        [Route("CadastrarMateria")]
+        public IActionResult CadastrarMateria([FromBody] MateriaDTO materia)
         {
             try
             {
@@ -56,7 +57,6 @@ namespace UnivalGeovanni.Controllers
             }
             catch (Exception ex)
             {
-                // Você pode personalizar a mensagem de erro conforme necessário
                 return StatusCode(500, $"Erro ao cadastrar matéria: {ex.Message}");
             }
         }

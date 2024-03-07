@@ -20,7 +20,6 @@ namespace UnivalGeovanni.DAO
                 comando.Parameters.AddWithValue("@nome", materia.Nome);
                 comando.Parameters.AddWithValue("@descricao", materia.Descricao);
                 comando.Parameters.AddWithValue("@professor", materia.Professor.Id);
-                
 
                 int idMateria = Convert.ToInt32(comando.ExecuteScalar());
 
@@ -30,8 +29,7 @@ namespace UnivalGeovanni.DAO
                 {
                     CadastrarDependencia(idMateria, dependencia.ID);
                 }     
-              //  comando.ExecuteNonQuery();
-            //    conexao.Close();
+
             }
         }
 
@@ -53,32 +51,47 @@ namespace UnivalGeovanni.DAO
 
         public List<MateriaDTO> ListarMateria()
         {
-            var materia = new List<MateriaDTO>();
+            var materias = new List<MateriaDTO>();
 
             using (var conexao = ConnectionFactory.Build())
             {
                 conexao.Open();
 
-                var query = "SELECT * FROM Materias";
+                var query = @"
+            SELECT m.ID, m.Nome, m.Descricao, m.Professor, 
+                   p.Nome AS NomeProfessor, p.CPF AS CPFProfessor, 
+                   p.Email AS EmailProfessor, p.Celular AS CelularProfessor, 
+                   p.DataNascimento AS DataNascimentoProfessor 
+            FROM Materias m
+            INNER JOIN Professores p ON m.Professor = p.ID";
 
                 var comando = new MySqlCommand(query, conexao);
                 var dataReader = comando.ExecuteReader();
 
                 while (dataReader.Read())
                 {
-                    var Materia = new MateriaDTO
+                    var materia = new MateriaDTO
                     {
                         ID = int.Parse(dataReader["ID"].ToString()),
                         Nome = dataReader["Nome"].ToString(),
                         Descricao = dataReader["Descricao"].ToString(),
-                        Professor = new ProfessorDTO { Id = int.Parse(dataReader["Professor"].ToString()) }
+                        Professor = new ProfessorDTO
+                        {
+                            Id = int.Parse(dataReader["Professor"].ToString()),
+                            Nome = dataReader["NomeProfessor"].ToString(),
+                            CPF = dataReader["CPFProfessor"].ToString(),
+                            Email = dataReader["EmailProfessor"].ToString(),
+                            Celular = dataReader["CelularProfessor"].ToString(),
+                            DataNascimento = DateTime.Parse(dataReader["DataNascimentoProfessor"].ToString())
+                        }
                     };
-                    materia.Add(Materia);
+                    materias.Add(materia);
                 }
             }
 
-            return materia;
+            return materias;
         }
+
+
     }
 }
-/
