@@ -44,6 +44,17 @@ namespace UnivalGeovanni.Controllers
         }
 
         [HttpPost]
+        [Route("CadastroMateria")]
+        public IActionResult Cadastro([FromBody] MateriaDTO materia)
+        {
+           var materiaDAO = new MateriaDAO();
+           int idMateria = 0;
+           materiaDAO.CadastrarMateria(materia);
+           idMateria = materia.ID;
+           return Ok();
+        }
+
+        [HttpPost]
         [Route("CadastrarMatricula")]
 
         public IActionResult Matricula()
